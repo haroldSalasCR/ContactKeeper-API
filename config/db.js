@@ -5,10 +5,13 @@ const db = config.get("mongoURI");
 const connectDB = async () => {
   try {
     await mongoose.connect(db, {
-      userNewUrlParser: true,
+      useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false,
+      useUnifiedTopology: true,
     });
+
+    console.log("MongoBD connected...");
   } catch (error) {
     console.log(error.message);
     process.exit(1);

@@ -1,3 +1,3 @@
 {
-  "mongoURI": "mongodb+srv://<reactdb>:<reactdb>@reactdb.bmkdn.mongodb.net/<learningReact>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://hass-u:hass-u@reactdb.bmkdn.mongodb.net/learningDB?retryWrites=true&w=majority"
 }
