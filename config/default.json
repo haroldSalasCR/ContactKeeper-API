@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://hass-u:hass-u@reactdb.bmkdn.mongodb.net/learningDB?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://hass-u:mongoPass@reactdb.bmkdn.mongodb.net/learningDB?retryWrites=true&w=majority",
   "jwtSecret": "contactkeeper-secret"
 }
