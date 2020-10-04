@@ -1,6 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/auth/authContext";
 
-const Register = () => {
+const Register = (props) => {
+  const alertContect = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+
+  const { setAlert } = alertContect;
+  const { register, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
+
+    if (error === "User already exists") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -14,7 +35,17 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("Register submit");
+    if (name === "" || email === "" || password === "") {
+      setAlert("Please enter all fields", "danger");
+    } else if (password !== password2) {
+      setAlert("The passwords are different", "danger");
+    } else {
+      register({
+        name,
+        email,
+        password,
+      });
+    }
   };
 
   return (
@@ -49,8 +80,10 @@ const Register = () => {
             type="password"
             name="password"
             placeholder="password"
+            autoComplete="off"
             value={password}
             onChange={onChange}
+            minLength={6}
           />
         </div>
         <div className="form-group">
@@ -61,6 +94,7 @@ const Register = () => {
             placeholder="password confirmation"
             value={password2}
             onChange={onChange}
+            minLength={6}
           />
         </div>
         <input

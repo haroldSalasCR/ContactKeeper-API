@@ -1,8 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import ContactContext from "../../context/contact/contactContext";
+import AlertContext from "../../context/alert/alertContext";
 
 const ContactForm = () => {
   const contactContext = useContext(ContactContext);
+  const alertContect = useContext(AlertContext);
+
+  const { setAlert } = alertContect;
 
   const { addContact, clearCurrent, current, updateContact } = contactContext;
 
@@ -33,12 +37,16 @@ const ContactForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (current === null) {
-      addContact(contact);
+    if (name === "" || email === "" || phone === "") {
+      setAlert("Please enter all the fields", "danger");
     } else {
-      updateContact(contact);
+      if (current === null) {
+        addContact(contact);
+      } else {
+        updateContact(contact);
+      }
+      clearAll();
     }
-    clearAll();
   };
 
   const clearAll = () => {
