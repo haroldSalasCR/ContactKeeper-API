@@ -56,18 +56,31 @@ router.post(
 // @route   PUT api/contact/:id
 // @desc    Update a contact
 // @access  Private
-router.put("/", (req, res) => {
-  res.send("Contact Updated");
+router.put("/:id", async (req, res) => {
+  try {
+    const { name, email, phone, type } = req.body;
+
+    const contact = await Contact.updateOne(
+      { _id: req.params.id },
+      { name, email, phone, type },
+      { upsert: true }
+    );
+    console.log("--- ", contact);
+    res.json(contact);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
 });
 
 // @route   DELETE api/contact/:id
 // @desc    Delete a contact
 // @access  Private
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
-    Contact.deleteOne({ _id: req.params.id }).then(() => {
-      res.status(200).send("Contact delete!");
-    });
+    const contact = await Contact.deleteOne({ _id: req.params.id });
+    console.log("---> ", res);
+    res.json(contact);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
